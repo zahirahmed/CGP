@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/cardviewdashboard"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="18dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark" >
+
+                <com.eleganzit.cgp.utils.VerticalTextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:rotation="180"
+                    android:text="DATE: 06-07-2019"
+                    android:textAllCaps="true"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
+                    <TableRow android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:id="@+id/txt_sr"
+                            android:layout_width="0dp"
+                            android:layout_weight="70"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:singleLine="true"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="#01"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
+                            android:gravity="end"
+                            android:fontFamily="@font/poppins_regular"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/colorGray" />
+
+
+                    </TableRow>
+
+                    <TableRow android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="70"
+                            android:ellipsize="end"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:singleLine="true"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Mill name"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:id="@+id/txt_mill"
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
+                            android:gravity="end"
+                            android:fontFamily="@font/poppins_regular"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="name"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/colorGray" />
+
+
+                    </TableRow>
+
+                    <TableRow android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="70"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:singleLine="true"
+                            android:text="Vehicle No."
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:id="@+id/txt_veh"
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:singleLine="true"
+                            android:text="0000"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/colorGray" />
+
+
+                    </TableRow>
+
+                    <TableRow android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="70"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:singleLine="true"
+                            android:text="Seed Rate"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:id="@+id/txt_rate"
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
+                            android:ellipsize="end"
+                            android:gravity="end"
+                            android:singleLine="true"
+                            android:text="0"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/colorGray" />
+
+
+                    </TableRow>
+
+                    <TableRow android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="70"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="Weight"
+                            android:textColor="@color/colorGray" />
+
+                        <TextView
+                            android:id="@+id/txt_weight"
+                            android:layout_width="0dp"
+                            android:gravity="end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="50"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="0"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:textColor="@color/colorGray" />
+
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_edit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="70"
+                            android:ellipsize="end"
+                            android:background="@drawable/cell_shape"
+                            android:gravity="center"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:singleLine="true"
+                            android:text="EDIT"
+                            android:textColor="@color/colorGreen" />
+
+                        <TextView
+                            android:id="@+id/txt_delete"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="70"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:background="@drawable/cell_shape"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                            android:singleLine="true"
+                            android:text="DELETE"
+                            android:textColor="@color/colorRed" />
+
+                    </TableRow>
+
+                </TableLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>
