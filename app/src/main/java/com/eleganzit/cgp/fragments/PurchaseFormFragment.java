@@ -4,6 +4,7 @@ package com.eleganzit.cgp.fragments;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -60,6 +63,7 @@ public class PurchaseFormFragment extends Fragment {
     String byDate="";
     private String id="";
     private String from="";
+    SharedPreferences prefs = null;
 
     public PurchaseFormFragment() {
         // Required empty public constructor
@@ -74,6 +78,8 @@ public class PurchaseFormFragment extends Fragment {
         HomeActivity.txt_title.setText("Purchase Form");
         HomeActivity.share.setVisibility(View.GONE);
         HomeActivity.filter.setVisibility(View.GONE);
+
+        prefs = getActivity().getSharedPreferences("com.eleganzit.cgp", MODE_PRIVATE);
 
         userLoggedInSession=new UserLoggedInSession(getActivity());
         progressDialog = new ProgressDialog(getActivity());
@@ -439,7 +445,19 @@ public class PurchaseFormFragment extends Fragment {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().toString().equalsIgnoreCase("1")) {
                         if (response.body().getData() != null) {
-                            getFragmentManager().popBackStack();
+
+                            if (prefs.getBoolean("firstrun", true)) {
+                                // Do first run stuff here then set 'firstrun' as false
+                                // using the following line to edit/commit prefs
+                                prefs.edit().putBoolean("firstrun", false).commit();
+                                PurchaseListFragment purchaseFormFragment=new PurchaseListFragment();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container,purchaseFormFragment).commit();
+
+                            }
+                            else
+                            {
+                                getFragmentManager().popBackStack();
+                            }
 
                             Toast.makeText(getActivity(), "Successful" , Toast.LENGTH_SHORT).show();
 

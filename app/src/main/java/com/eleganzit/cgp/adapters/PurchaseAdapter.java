@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,9 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
             String yourFormattedString1,yourFormattedString2;
 
             DecimalFormat formatter = new DecimalFormat("##,##,##,###");
+
+            Log.d("arfsdf",i+" "+sr_no);
+
             yourFormattedString1 = formatter.format(Double.valueOf(purchaseData.getApproxBaleRate()));
 
             ((DViewHolder)myViewHolder).txt_date.setText("DATE :"+purchaseData.getAddDate());
@@ -249,6 +253,7 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.MyView
 
     public void addData(ArrayList<PurchaseListData> integersList) {
         arrayList.addAll(integersList);
+        sr_no=arrayList.size();
         notifyDataSetChanged();
     }
 

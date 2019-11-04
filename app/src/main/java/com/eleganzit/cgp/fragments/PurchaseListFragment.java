@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
 import com.eleganzit.cgp.HomeActivity;
 import com.eleganzit.cgp.R;
+import com.eleganzit.cgp.adapters.BalesAdapter;
 import com.eleganzit.cgp.adapters.PurchaseAdapter;
 import com.eleganzit.cgp.api.RetrofitAPI;
 import com.eleganzit.cgp.api.RetrofitInterface;
@@ -428,21 +429,32 @@ public class PurchaseListFragment extends Fragment {
 
                                 PurchaseListData purchaseData=new PurchaseListData(response.body().getData().get(i).getPurchaseId(),response.body().getData().get(i).getUserId(),response.body().getData().get(i).getAddDate(),response.body().getData().get(i).getHeap(),response.body().getData().get(i).getVehicleNo(),response.body().getData().get(i).getFinalWeight(),response.body().getData().get(i).getRateOfKapas(),response.body().getData().get(i).getPerOfCotton(),response.body().getData().get(i).getShortage(),response.body().getData().get(i).getSeedRate(),response.body().getData().get(i).getApproxBaleRate(),response.body().getData().get(i).getCreatedDate());
 
-                                list_size=list_size+response.body().getData().size();
 
                                 arrayList.add(purchaseData);
 
                             }
+
+                            list_size=list_size+response.body().getData().size();
                             purchaseAdapter=new PurchaseAdapter(arrayList,getActivity());
 
                             rc_list.setAdapter(purchaseAdapter);
+                            Log.d("arfasd","1>>"+(list_size)+"");
 
                             getPurchaseform2((arrayList.size()+1)+"");
 
                         }
                     } else {
                         end=true;
-                        Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                        if(arrayList.size()>0){
+                            arrayList.clear();
+                        }
+
+                        purchaseAdapter=new PurchaseAdapter(arrayList,getActivity());
+
+                        rc_list.setAdapter(purchaseAdapter);
+
+                        Toast.makeText(getActivity(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -461,7 +473,7 @@ public class PurchaseListFragment extends Fragment {
 
     }
 
-    private void getPurchaseform2(String limit, final String from, final String to) {
+    private void getFPurchaseform2(String limit, final String from, final String to) {
 
 
         purchaseAdapter.addNullData();
@@ -484,17 +496,18 @@ public class PurchaseListFragment extends Fragment {
 
                             for(int i=0;i<response.body().getData().size();i++){
 
-                                PurchaseListData purchaseData=new PurchaseListData("","","","","","","","","","","","");
+                                PurchaseListData purchaseData=new PurchaseListData(response.body().getData().get(i).getPurchaseId(),response.body().getData().get(i).getUserId(),response.body().getData().get(i).getAddDate(),response.body().getData().get(i).getHeap(),response.body().getData().get(i).getVehicleNo(),response.body().getData().get(i).getFinalWeight(),response.body().getData().get(i).getRateOfKapas(),response.body().getData().get(i).getPerOfCotton(),response.body().getData().get(i).getShortage(),response.body().getData().get(i).getSeedRate(),response.body().getData().get(i).getApproxBaleRate(),response.body().getData().get(i).getCreatedDate());
 
                                 arrayList.add(purchaseData);
 
-                                list_size=list_size+response.body().getData().size();
 
                             }
+                            list_size=list_size+response.body().getData().size();
 
                             purchaseAdapter.addData(arrayList);
+                            Log.d("arfasd","3>>"+list_size+"");
 
-                            getPurchaseform2(list_size+"",from,to);
+                            getFPurchaseform2(list_size+"",from,to);
                         }
                         end=false;
                     } else {
@@ -543,16 +556,19 @@ public class PurchaseListFragment extends Fragment {
 
                                 PurchaseListData purchaseData=new PurchaseListData(response.body().getData().get(i).getPurchaseId(),response.body().getData().get(i).getUserId(),response.body().getData().get(i).getAddDate(),response.body().getData().get(i).getHeap(),response.body().getData().get(i).getVehicleNo(),response.body().getData().get(i).getFinalWeight(),response.body().getData().get(i).getRateOfKapas(),response.body().getData().get(i).getPerOfCotton(),response.body().getData().get(i).getShortage(),response.body().getData().get(i).getSeedRate(),response.body().getData().get(i).getApproxBaleRate(),response.body().getData().get(i).getCreatedDate());
 
-                                list_size=list_size+response.body().getData().size();
 
                                 arrayList.add(purchaseData);
 
                             }
+                            list_size=list_size+response.body().getData().size();
+
                             purchaseAdapter=new PurchaseAdapter(arrayList,getActivity());
+
 
                             rc_list.setAdapter(purchaseAdapter);
 
-                            getPurchaseform2((arrayList.size()+1)+"",from,to);
+
+                            getFPurchaseform2((arrayList.size()+1)+"",from,to);
 
                         }
                     } else {
@@ -606,13 +622,15 @@ public class PurchaseListFragment extends Fragment {
 
                             for(int i=0;i<response.body().getData().size();i++){
 
-                                PurchaseListData purchaseData=new PurchaseListData("","","","","","","","","","","","");
+                                PurchaseListData purchaseData=new PurchaseListData(response.body().getData().get(i).getPurchaseId(),response.body().getData().get(i).getUserId(),response.body().getData().get(i).getAddDate(),response.body().getData().get(i).getHeap(),response.body().getData().get(i).getVehicleNo(),response.body().getData().get(i).getFinalWeight(),response.body().getData().get(i).getRateOfKapas(),response.body().getData().get(i).getPerOfCotton(),response.body().getData().get(i).getShortage(),response.body().getData().get(i).getSeedRate(),response.body().getData().get(i).getApproxBaleRate(),response.body().getData().get(i).getCreatedDate());
 
                                 arrayList.add(purchaseData);
 
-                                list_size=list_size+response.body().getData().size();
+                                Log.d("arfasd","2>>"+(list_size)+"");
+
 
                             }
+                            list_size=(list_size+response.body().getData().size());
 
                             purchaseAdapter.addData(arrayList);
 

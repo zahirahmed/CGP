@@ -616,9 +616,9 @@ public class SeedListFragment extends Fragment {
 
                                 arrayList.add(seedData);
 
-                                list_size=list_size+response.body().getData().size();
 
                             }
+                            list_size=list_size+response.body().getData().size();
 
                             seedAdapter.addData(arrayList);
 
@@ -767,9 +767,9 @@ public class SeedListFragment extends Fragment {
 
                                 arrayList.add(seedData);
 
-                                list_size=list_size+response.body().getData().size();
 
                             }
+                            list_size=list_size+response.body().getData().size();
 
                             seedAdapter.addData(arrayList);
 

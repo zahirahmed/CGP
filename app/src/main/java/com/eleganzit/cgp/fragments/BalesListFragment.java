@@ -29,6 +29,7 @@ import com.eleganzit.cgp.HomeActivity;
 import com.eleganzit.cgp.R;
 import com.eleganzit.cgp.adapters.BalesAdapter;
 import com.eleganzit.cgp.adapters.PurchaseAdapter;
+import com.eleganzit.cgp.adapters.SeedAdapter;
 import com.eleganzit.cgp.api.RetrofitAPI;
 import com.eleganzit.cgp.api.RetrofitInterface;
 import com.eleganzit.cgp.models.AvgPurchaseData;
@@ -610,9 +611,9 @@ public class BalesListFragment extends Fragment {
 
                                 arrayList.add(balesData);
 
-                                list_size=list_size+response.body().getData().size();
 
                             }
+                            list_size=list_size+response.body().getData().size();
 
                             balesAdapter.addData(arrayList);
 
@@ -679,6 +680,16 @@ public class BalesListFragment extends Fragment {
                         }
                     } else {
                         end=true;
+
+                        if(arrayList.size()>0){
+                            arrayList.clear();
+                        }
+
+                        balesAdapter=new BalesAdapter(arrayList,getActivity());
+
+                        rc_list.setAdapter(balesAdapter);
+
+                        Toast.makeText(getActivity(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -722,9 +733,9 @@ public class BalesListFragment extends Fragment {
 
                                 arrayList.add(balesData);
 
-                                list_size=list_size+response.body().getData().size();
 
                             }
+                            list_size=list_size+response.body().getData().size();
 
                             balesAdapter.addData(arrayList);
 

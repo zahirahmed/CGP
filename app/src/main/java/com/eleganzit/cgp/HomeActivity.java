@@ -63,7 +63,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+        prefs = getSharedPreferences("com.eleganzit.cgp", MODE_PRIVATE);
         userLoggedInSession=new UserLoggedInSession(this);
         drawer = findViewById(R.id.drawer_layout);
         txt_title = findViewById(R.id.txt_title);
@@ -95,7 +95,6 @@ public class HomeActivity extends AppCompatActivity
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             // using the following line to edit/commit prefs
-            prefs.edit().putBoolean("firstrun", false).commit();
             PurchaseFormFragment purchaseFormFragment=new PurchaseFormFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container,purchaseFormFragment).commit();
 
