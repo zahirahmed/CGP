@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FPActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".FPActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -49,6 +50,7 @@
             android:name=".HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity android:name=".AboutUsActivity"></activity>
     </application>
 
 </manifest>

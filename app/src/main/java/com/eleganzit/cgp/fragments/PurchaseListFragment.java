@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import com.eleganzit.cgp.models.PurchaseData;
 import com.eleganzit.cgp.models.PurchaseFormResponse;
 import com.eleganzit.cgp.models.PurchaseListData;
 import com.eleganzit.cgp.models.PurchaseListResponse;
+import com.eleganzit.cgp.models.Utils;
 import com.eleganzit.cgp.utils.UserLoggedInSession;
 
 import java.io.File;
@@ -82,6 +84,7 @@ public class PurchaseListFragment extends Fragment {
     String avg_title="Season: 2019-20";
 
     ProgressDialog progressDialog;
+    LinearLayout cardviewdashboard;
     UserLoggedInSession userLoggedInSession;
     NestedScrollView scrollview;
     //SwipeRefreshLayout swipe_refresh;
@@ -111,6 +114,7 @@ public class PurchaseListFragment extends Fragment {
         btn_add=v.findViewById(R.id.btn_add);
 
         //swipe_refresh=v.findViewById(R.id.swipe_refresh);
+        cardviewdashboard=v.findViewById(R.id.cardviewdashboard);
         avg_label=v.findViewById(R.id.avg_label);
         txt_date=v.findViewById(R.id.txt_date);
         txt_avg_krate=v.findViewById(R.id.txt_avg_krate);
@@ -674,7 +678,7 @@ public class PurchaseListFragment extends Fragment {
                             String id,ginning_name,state, area = "", email,expance;
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 //ed_heap.setHint("Heap (Last heap - "+response.body().getData().get(i).getHeap()+")");
-                                AvgPurchaseData avgPurchaseData=response.body().getData().get(i);
+                                final AvgPurchaseData avgPurchaseData=response.body().getData().get(i);
 
                                 String yourFormattedString1,yourFormattedString2,yourFormattedString3,yourFormattedString4;
 
@@ -695,6 +699,29 @@ public class PurchaseListFragment extends Fragment {
                                 txt_approx_bales.setText((Html.fromHtml("<b>" +yourFormattedString4+"</b>"+"<font color='#707070'>"+" "+" Bales"+"</font>")));
                                 avg_label.setText(""+avg_title);
                                 //format.format(new BigDecimal("100000000"));
+
+
+                                cardviewdashboard.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        ViewAvgDetailsFragment viewAvgDetailsFragment=new ViewAvgDetailsFragment();
+
+                                        Bundle bundle=new Bundle();
+                                        //String personJsonString = Utils.getGsonParser().toJson(avgPurchaseData);
+                                        bundle.putSerializable("avgPurchaseData",avgPurchaseData);
+                                        bundle.putString("avg_title",avg_title);
+
+                                        viewAvgDetailsFragment.setArguments(bundle);
+
+                                        getActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .addToBackStack("HomeActivity")
+                                                .replace(R.id.container,viewAvgDetailsFragment)
+                                                .commit();
+                                    }
+                                });
+
                             }
 
                         }
@@ -737,7 +764,7 @@ public class PurchaseListFragment extends Fragment {
                             String id,ginning_name,state, area = "", email,expance;
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 //ed_heap.setHint("Heap (Last heap - "+response.body().getData().get(i).getHeap()+")");
-                                AvgPurchaseData avgPurchaseData=response.body().getData().get(i);
+                                final AvgPurchaseData avgPurchaseData=response.body().getData().get(i);
 
                                 String yourFormattedString1,yourFormattedString2,yourFormattedString3,yourFormattedString4;
 
@@ -758,6 +785,28 @@ public class PurchaseListFragment extends Fragment {
                                 txt_approx_brate.setText((Html.fromHtml("<b>" +yourFormattedString3+"</b>"+"<font color='#707070'>"+" "+" Rs/"+avgPurchaseData.getGetbales_weight()+"kg"+"</font>")));
                                 txt_approx_bales.setText((Html.fromHtml("<b>" +yourFormattedString4+"</b>"+"<font color='#707070'>"+" "+" Bales"+"</font>")));
                                 avg_label.setText(""+avg_title);
+
+
+                                cardviewdashboard.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        ViewAvgDetailsFragment viewAvgDetailsFragment=new ViewAvgDetailsFragment();
+
+                                        Bundle bundle=new Bundle();
+                                        //String personJsonString = Utils.getGsonParser().toJson(avgPurchaseData);
+                                        bundle.putSerializable("avgPurchaseData",avgPurchaseData);
+                                        bundle.putString("avg_title",avg_title);
+
+                                        viewAvgDetailsFragment.setArguments(bundle);
+
+                                        getActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .addToBackStack("HomeActivity")
+                                                .replace(R.id.container,viewAvgDetailsFragment)
+                                                .commit();
+                                    }
+                                });
 
                             }
 

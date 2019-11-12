@@ -45,6 +45,7 @@ public class UserLoggedInSession {
 
     public static final String EMAIL = "email";
     public static final String MOBILE = "mobile";
+    public static final String FROM = "from";
 
     public UserLoggedInSession(Context context){
         this._context = context;
@@ -56,7 +57,7 @@ public class UserLoggedInSession {
     }
 
 
-    public void createLoginSession(String user_id,String ginning_name,String state, String area, String email, String mobile){
+    public void createLoginSession(String user_id,String ginning_name,String state, String area, String email, String mobile,String from){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
         editor.putBoolean(IS_FIRST, true);
@@ -70,10 +71,42 @@ public class UserLoggedInSession {
         editor.putString(AREA, area);
         editor.putString(EMAIL, email);
         editor.putString(MOBILE, mobile);
+        editor.putString(FROM, from);
 
         // commit changes
         editor.commit();
-        Intent i = new Intent(_context, HomeActivity.class).putExtra("from","session");
+        Intent i = new Intent(_context, HomeActivity.class)
+                .putExtra("from","register");
+
+        // Add new Flag to start new Activity
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        _context.startActivity(i);
+        activity.finish();
+        activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
+
+    public void createLoginSession(String user_id,String ginning_name,String state, String area, String email, String mobile,String from, String expance,String expance_unit){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+        editor.putBoolean(IS_FIRST, true);
+
+        // Storing name in pref   ,
+        editor.putString(USER_ID, user_id);
+        editor.putString(GINNING_NAME, ginning_name);
+
+        editor.putString(STATE, state);
+
+        editor.putString(AREA, area);
+        editor.putString(EMAIL, email);
+        editor.putString(MOBILE, mobile);
+        editor.putString(FROM, from);
+
+        // commit changes
+        editor.commit();
+        Intent i = new Intent(_context, HomeActivity.class)
+                .putExtra("from","login")
+                .putExtra("expance",""+expance)
+                .putExtra("expance_unit",""+expance_unit);
 
         // Add new Flag to start new Activity
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -140,6 +173,7 @@ public class UserLoggedInSession {
         user.put(STATE, pref.getString(STATE, null));
         user.put(BUSINESS, pref.getString(BUSINESS, null));
         user.put(AREA, pref.getString(AREA, null));
+        user.put(FROM, pref.getString(FROM, null));
 
         // return user
         return user;

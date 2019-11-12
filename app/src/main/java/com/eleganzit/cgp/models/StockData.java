@@ -3,49 +3,51 @@ package com.eleganzit.cgp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigInteger;
+
 public class StockData {
     @SerializedName("approx_bale_stock_kg")
     @Expose
-    private Integer approxBaleStockKg;
+    private BigInteger approxBaleStockKg;
     @SerializedName("approx_bale_stock_bales")
     @Expose
-    private Integer approxBaleStockBales;
+    private BigInteger approxBaleStockBales;
     @SerializedName("approx_seed_stock_truck")
     @Expose
-    private Integer approxSeedStockTruck;
+    private BigInteger approxSeedStockTruck;
     @SerializedName("approx_seed_stock_kg")
     @Expose
-    private Integer approxSeedStockKg;
+    private BigInteger approxSeedStockKg;
 
-    public Integer getApproxBaleStockKg() {
+    public BigInteger getApproxBaleStockKg() {
         return approxBaleStockKg;
     }
 
-    public void setApproxBaleStockKg(Integer approxBaleStockKg) {
+    public void setApproxBaleStockKg(BigInteger approxBaleStockKg) {
         this.approxBaleStockKg = approxBaleStockKg;
     }
 
-    public Integer getApproxBaleStockBales() {
+    public BigInteger getApproxBaleStockBales() {
         return approxBaleStockBales;
     }
 
-    public void setApproxBaleStockBales(Integer approxBaleStockBales) {
+    public void setApproxBaleStockBales(BigInteger approxBaleStockBales) {
         this.approxBaleStockBales = approxBaleStockBales;
     }
 
-    public Integer getApproxSeedStockTruck() {
+    public BigInteger getApproxSeedStockTruck() {
         return approxSeedStockTruck;
     }
 
-    public void setApproxSeedStockTruck(Integer approxSeedStockTruck) {
+    public void setApproxSeedStockTruck(BigInteger approxSeedStockTruck) {
         this.approxSeedStockTruck = approxSeedStockTruck;
     }
 
-    public Integer getApproxSeedStockKg() {
+    public BigInteger getApproxSeedStockKg() {
         return approxSeedStockKg;
     }
 
-    public void setApproxSeedStockKg(Integer approxSeedStockKg) {
+    public void setApproxSeedStockKg(BigInteger approxSeedStockKg) {
         this.approxSeedStockKg = approxSeedStockKg;
     }
 }

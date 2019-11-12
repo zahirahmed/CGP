@@ -154,7 +154,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 email = response.body().getData().get(i).getEmail();
                                 mobile = response.body().getData().get(i).getMobile();
 
-                                userLoggedInSession.createLoginSession(id, ginning_name,state, area,email,mobile);
+                                userLoggedInSession.createLoginSession(id, ginning_name,state, area,email,mobile,"register");
 
                             }
 

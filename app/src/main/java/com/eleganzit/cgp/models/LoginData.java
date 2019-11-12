@@ -28,6 +28,9 @@ public class LoginData {
     @SerializedName("expance")
     @Expose
     private String expance;
+    @SerializedName("expance_unit")
+    @Expose
+    private String expance_unit;
     @SerializedName("register_date")
     @Expose
     private String registerDate;
@@ -97,6 +100,14 @@ public class LoginData {
 
     public void setExpance(String expance) {
         this.expance = expance;
+    }
+
+    public String getExpance_unit() {
+        return expance_unit;
+    }
+
+    public void setExpance_unit(String expance_unit) {
+        this.expance_unit = expance_unit;
     }
 
     public String getRegisterDate() {

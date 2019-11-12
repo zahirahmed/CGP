@@ -130,6 +130,15 @@ public interface RetrofitInterface {
     );
 
     @FormUrlEncoded()
+    @POST("/CBLT-API/getSellbaleform")
+    Call<GetSaleBaleResponse> getFmillsSellbaleform(
+            @Field("user_id") String user_id,
+            @Field("mill_id") String mill_id,
+            @Field("trader_id") String trader_id,
+            @Field("from_limit") String from_limit
+    );
+
+    @FormUrlEncoded()
     @POST("/CBLT-API/getSeedform")
     Call<GetSaleSeedResponse> getSeedform(
             @Field("user_id") String user_id,
@@ -177,6 +186,15 @@ public interface RetrofitInterface {
     );
 
     @FormUrlEncoded()
+    @POST("/CBLT-API/userUpdate")
+    Call<LoginResponse> userUpdateexpance(
+            @Field("user_id") String user_id,
+
+            @Field("expance") String expance
+
+    );
+
+    @FormUrlEncoded()
     @POST("/CBLT-API/cgpgetUser")
     Call<LoginResponse> cgpgetUser(
             @Field("user_id") String user_id
@@ -220,6 +238,14 @@ public interface RetrofitInterface {
             @Field("user_id") String user_id,
             @Field("from_date") String from_date,
             @Field("to_date") String to_date
+    );
+
+    @FormUrlEncoded()
+    @POST("/CBLT-API/avgSalesbalerate")
+    Call<AvgSaleBalesResponse> avgFmillSalesbalerate(
+            @Field("user_id") String user_id,
+            @Field("mill_id") String mill_id,
+            @Field("trader_id") String trader_id
     );
 
     @FormUrlEncoded()

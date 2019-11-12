@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="50dp"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/colorGray"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="Date"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        android:background="#efefef"/>
+
+    <TextView
+        android:id="@+id/heap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/colorGray"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="Heap"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef"/>
+
+    <TextView
+        android:id="@+id/season"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/colorGray"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="Season"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef"/>
+
+    <TextView
+        android:id="@+id/mills"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/colorGray"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="Spinning Mills"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef"/>
+
+    <TextView
+        android:id="@+id/trader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/colorGray"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:text="Traders"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackground" />
+
+</LinearLayout>

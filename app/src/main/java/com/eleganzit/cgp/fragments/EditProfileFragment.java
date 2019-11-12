@@ -44,7 +44,7 @@ import retrofit2.Response;
 public class EditProfileFragment extends Fragment {
 
     EditText ed_ginning,ed_area,ed_expance,ed_email;
-    TextView txt_username;
+    TextView txt_username,txt_unit;
     Button btn_save;
     Spinner spinner;
     LinearLayout lin_change_password;
@@ -70,6 +70,7 @@ public class EditProfileFragment extends Fragment {
 
         lin_change_password=v.findViewById(R.id.lin_change_password);
         txt_username=v.findViewById(R.id.txt_username);
+        txt_unit=v.findViewById(R.id.txt_unit);
         ed_ginning=v.findViewById(R.id.ed_ginning);
         ed_email=v.findViewById(R.id.ed_email);
         ed_area=v.findViewById(R.id.ed_area);
@@ -342,6 +343,7 @@ public class EditProfileFragment extends Fragment {
         });
 
     }
+
     private void userUpdate2(final Dialog dialog, String password) {
 
         progressDialog.show();
@@ -397,17 +399,19 @@ public class EditProfileFragment extends Fragment {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().toString().equalsIgnoreCase("1")) {
                         if (response.body().getData() != null) {
-                            String id,ginning_name,state, area = "", username,expance;
+                            String id,ginning_name,state, area = "", username,expance,expance_unit;
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 ginning_name = response.body().getData().get(i).getGinningName();
                                 username = response.body().getData().get(i).getUsername();
                                 area = response.body().getData().get(i).getArea();
                                 expance = response.body().getData().get(i).getExpance();
+                                expance_unit = response.body().getData().get(i).getExpance_unit();
                                 ed_email.setText(""+response.body().getData().get(i).getEmail());
                                 ed_ginning.setText(ginning_name+"");
                                 ed_area.setText(area+"");
-                                //ed_expance.setText(expance+"");
-                                ed_expance.setText((Html.fromHtml("<b>" + "35"+"</b>"+"<font color='#707070'>"+" "+" Rs/"+"20kg"+"</font>"+"  or  <b>" + "175"+"</b>"+"<font color='#707070'>"+" "+" Rs/"+"100kg"+"</font>")));
+                                ed_expance.setText((Html.fromHtml("<b>" + expance+"</b> ")));
+                                txt_unit.setText((Html.fromHtml("<font color='#707070'>"+" "+expance_unit+"</font>")));
+                                //ed_expance.setText((Html.fromHtml("<b>" + "35"+"</b>"+"<font color='#707070'>"+" "+" Rs/"+"20kg"+"</font>"+"  or  <b>" + "175"+"</b>"+"<font color='#707070'>"+" "+" Rs/"+"100kg"+"</font>")));
                                 txt_username.setText(username+"");
 
                             }

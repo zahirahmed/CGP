@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().toString().equalsIgnoreCase("1")) {
                         if (response.body().getData() != null) {
-                            String id,ginning_name,state, area = "", email,mobile;
+                            String id,ginning_name,state, area = "", email,mobile,expance,expance_unit;
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 id = String.valueOf(response.body().getData().get(i).getUserId());
                                 ginning_name = response.body().getData().get(i).getGinningName();
@@ -106,8 +106,10 @@ public class LoginActivity extends AppCompatActivity {
                                 area = response.body().getData().get(i).getArea();
                                 email = response.body().getData().get(i).getEmail();
                                 mobile = response.body().getData().get(i).getMobile();
+                                expance = response.body().getData().get(i).getExpance();
+                                expance_unit = response.body().getData().get(i).getExpance_unit();
 
-                                userLoggedInSession.createLoginSession(id, ginning_name,state, area,email,mobile);
+                                userLoggedInSession.createLoginSession(id, ginning_name,state, area,email,mobile,"login",expance,expance_unit);
 
                             }
 

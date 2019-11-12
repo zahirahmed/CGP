@@ -3,7 +3,9 @@ package com.eleganzit.cgp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AvgPurchaseData {
+import java.io.Serializable;
+
+public class AvgPurchaseData implements Serializable{
     @SerializedName("avg_kapas_rate")
     @Expose
     private String avgKapasRate;

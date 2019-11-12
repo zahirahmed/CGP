@@ -127,19 +127,67 @@
             android:layout_marginRight="25dp"
             android:layout_marginTop="10dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_expance"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:clickable="false"
-                android:fontFamily="@font/poppins_regular"
-                android:hint="Your Ginning Expance"
-                android:cursorVisible="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000" />
+                android:layout_height="wrap_content">
+
+            </RelativeLayout>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_bg"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lbl_ex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="#939393"
+                android:text="Your Ginning Expance"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbl_ex"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_expance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:inputType="number"
+                    android:background="#01ffffff"
+                    android:layout_centerVertical="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/txt_unit"
+                    android:layout_toRightOf="@+id/ed_expance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#9f9f9f"/>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
