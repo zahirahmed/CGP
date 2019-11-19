@@ -32,24 +32,93 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/gray_border"
                     android:gravity="center_vertical"
-                    android:padding="5dp">
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/poppins_regular"
+                        android:text="Ginning Name"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#5e5e5e" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="right"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:text="Date"
+                        android:textColor="#5e5e5e" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
+                    android:gravity="center_vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/txt_gn_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Ginning Name"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="#000000"
-                        android:text="Approx Bales Stock" />
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/txt_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/txt_gn_name"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="right"
+                        android:text="00-00-0000"
+                        android:textColor="#000000" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/gray_border"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/ttl1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Approx Bales Stock"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#000000" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/ttl1"
                         android:gravity="right"
                         android:orientation="vertical">
 
@@ -57,17 +126,21 @@
                             android:id="@+id/txt_frst"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="0 kg" />
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:text="0 kg"
+                            android:textColor="#000000" />
 
                         <TextView
                             android:id="@+id/txt_scnd"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="0 bales" />
+                            android:text="0 bales"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="#000000" />
 
 
                     </LinearLayout>
@@ -82,18 +155,20 @@
                     android:padding="5dp">
 
                     <TextView
+                        android:id="@+id/ttl2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="#000000"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Approx Seed Stock" />
+                        android:text="Approx Seed Stock"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#000000" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/ttl2"
                         android:gravity="right"
                         android:orientation="vertical">
 
@@ -101,17 +176,21 @@
                             android:id="@+id/txt_thrd"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="0 kg" />
+                            android:text="0 kg"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="#000000" />
 
                         <TextView
                             android:id="@+id/txt_frth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="0 Truck" />
+                            android:text="0 Truck"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="#000000" />
 
 
                     </LinearLayout>

@@ -385,6 +385,7 @@ public class EditProfileFragment extends Fragment {
         });
 
     }
+
     private void cgpgetUser() {
 
         progressDialog.show();

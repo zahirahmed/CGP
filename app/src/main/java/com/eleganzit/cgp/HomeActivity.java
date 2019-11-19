@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.text.Html;
 import android.view.View;
 
 import android.view.Menu;
@@ -66,7 +67,8 @@ public class HomeActivity extends AppCompatActivity
     public static ImageView share, filter;
     SharedPreferences prefs = null;
     ProgressDialog progressDialog;
-
+    String expance_unit,expance;
+            
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +122,8 @@ public class HomeActivity extends AppCompatActivity
         if (userLoggedInSession.getUserDetails().get(UserLoggedInSession.FROM) != null) {
 
 
-            if (userLoggedInSession.getUserDetails().get(UserLoggedInSession.FROM).equalsIgnoreCase("login")) {
+            if (userLoggedInSession.getUserDetails().get(UserLoggedInSession.FROM).equalsIgnoreCase("login") ||
+                    userLoggedInSession.getUserDetails().get(UserLoggedInSession.FROM).equalsIgnoreCase("register")) {
 
 
                 if (getIntent() != null) {
@@ -155,7 +158,7 @@ public class HomeActivity extends AppCompatActivity
 
                                     if (!txt_expance.getText().toString().matches("^[0]+$")) {
                                         // accept this input
-                                        userUpdateexpance(txt_expance.getText().toString() + "", dialog);
+                                        userUpdateexpance(txt_expance.getText().toString().trim() + "", dialog);
                                     } else {
                                         txt_expance.requestFocus();
                                         txt_expance.setError("Enter valid expance");
@@ -165,7 +168,19 @@ public class HomeActivity extends AppCompatActivity
                             }
                         });
 
-                        dialog.show();
+                        if(expance.equalsIgnoreCase("99")){
+                            dialog.show();
+                        }
+
+                    }
+                    else if(getIntent().getStringExtra("from").equalsIgnoreCase("register"))
+                    {
+                        cgpgetUser();
+                    }
+                    else if(getIntent().getStringExtra("from").equalsIgnoreCase("splash"))
+                    {
+                        cgpgetUser2();
+
                     }
                 }
 
@@ -187,6 +202,164 @@ public class HomeActivity extends AppCompatActivity
         }
         MenuAdapter mMenuAdapter = new MenuAdapter(HomeActivity.this, R.layout.drawer_list_item, drawerItemList);
         mDrawerList.setAdapter(mMenuAdapter);
+
+    }
+
+
+    private void cgpgetUser() {
+
+        progressDialog.show();
+        RetrofitInterface myInterface = RetrofitAPI.getRetrofit().create(RetrofitInterface.class);
+        Call<LoginResponse> call = myInterface.cgpgetUser(
+                userLoggedInSession.getUserDetails().get(UserLoggedInSession.USER_ID)+""
+        );
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().toString().equalsIgnoreCase("1")) {
+                        if (response.body().getData() != null) {
+                            for (int i = 0; i < response.body().getData().size(); i++) {
+
+                                expance_unit = response.body().getData().get(i).getExpance_unit();
+
+                            }
+
+                            final Dialog dialog = new Dialog(HomeActivity.this);
+                            dialog.setContentView(R.layout.expance_dialog);
+                            dialog.setCancelable(false);
+                            dialog.setCanceledOnTouchOutside(false);
+
+                            final EditText txt_expance;
+                            TextView txt_expance_unit;
+                            RelativeLayout btn_submit;
+
+                            txt_expance = dialog.findViewById(R.id.txt_expance);
+                            txt_expance_unit = dialog.findViewById(R.id.txt_expance_unit);
+                            btn_submit = dialog.findViewById(R.id.btn_submit);
+
+                            //txt_expance.setText(expance+"");
+                            txt_expance_unit.setText(expance_unit + "");
+
+                            btn_submit.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (!txt_expance.getText().toString().isEmpty()) {
+
+                                        if (!txt_expance.getText().toString().matches("^[0]+$")) {
+                                            // accept this input
+                                            userUpdateexpance(txt_expance.getText().toString().trim() + "", dialog);
+                                        } else {
+                                            txt_expance.requestFocus();
+                                            txt_expance.setError("Enter valid expance");
+                                        }
+
+                                    }
+                                }
+                            });
+
+                            dialog.show();
+                        }
+                    } else {
+
+                        Toast.makeText(HomeActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else {
+
+                    Toast.makeText(HomeActivity.this, "Server or Internet Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(HomeActivity.this, "Server or Internet Error" , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void cgpgetUser2() {
+
+        progressDialog.show();
+        RetrofitInterface myInterface = RetrofitAPI.getRetrofit().create(RetrofitInterface.class);
+        Call<LoginResponse> call = myInterface.cgpgetUser(
+                userLoggedInSession.getUserDetails().get(UserLoggedInSession.USER_ID)+""
+        );
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().toString().equalsIgnoreCase("1")) {
+                        if (response.body().getData() != null) {
+                            for (int i = 0; i < response.body().getData().size(); i++) {
+
+                                expance_unit = response.body().getData().get(i).getExpance_unit();
+                                expance = response.body().getData().get(i).getExpance();
+
+                            }
+
+
+                            final Dialog dialog = new Dialog(HomeActivity.this);
+                            dialog.setContentView(R.layout.expance_dialog);
+                            dialog.setCancelable(false);
+                            dialog.setCanceledOnTouchOutside(false);
+
+                            final EditText txt_expance;
+                            TextView txt_expance_unit;
+                            RelativeLayout btn_submit;
+
+                            txt_expance = dialog.findViewById(R.id.txt_expance);
+                            txt_expance_unit = dialog.findViewById(R.id.txt_expance_unit);
+                            btn_submit = dialog.findViewById(R.id.btn_submit);
+
+                            //txt_expance.setText(expance+"");
+                            txt_expance_unit.setText(expance_unit + "");
+
+                            btn_submit.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (!txt_expance.getText().toString().isEmpty()) {
+
+                                        if (!txt_expance.getText().toString().matches("^[0]+$")) {
+                                            // accept this input
+                                            userUpdateexpance(txt_expance.getText().toString().trim() + "", dialog);
+                                        } else {
+                                            txt_expance.requestFocus();
+                                            txt_expance.setError("Enter valid expance");
+                                        }
+
+                                    }
+                                }
+                            });
+
+                            if(expance.equalsIgnoreCase("99")){
+                                dialog.show();
+                            }
+
+                        }
+                    } else {
+
+                        Toast.makeText(HomeActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else {
+
+                    Toast.makeText(HomeActivity.this, "Server or Internet Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(HomeActivity.this, "Server or Internet Error" , Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

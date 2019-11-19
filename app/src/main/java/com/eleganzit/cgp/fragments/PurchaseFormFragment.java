@@ -4,8 +4,16 @@ package com.eleganzit.cgp.fragments;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +25,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.eleganzit.cgp.HomeActivity;
@@ -39,10 +49,15 @@ import com.eleganzit.cgp.models.UpdatePurchaseResponse;
 import com.eleganzit.cgp.utils.UserLoggedInSession;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +79,7 @@ public class PurchaseFormFragment extends Fragment {
     private String id="";
     private String from="";
     SharedPreferences prefs = null;
+    ScrollView ss;
 
     public PurchaseFormFragment() {
         // Required empty public constructor
@@ -96,6 +112,7 @@ public class PurchaseFormFragment extends Fragment {
         }
 
         ed_date=v.findViewById(R.id.ed_date);
+        ss=v.findViewById(R.id.ss);
         il_heap=v.findViewById(R.id.il_heap);
         ed_heap=v.findViewById(R.id.ed_heap);
         ed_vehicle=v.findViewById(R.id.ed_vehicle);
@@ -197,6 +214,7 @@ public class PurchaseFormFragment extends Fragment {
         if(from.equalsIgnoreCase("view"))
         {
             HomeActivity.txt_title.setText("View Details");
+            HomeActivity.share.setVisibility(View.VISIBLE);
             getSalebale_byid();
             btn_submit.setVisibility(View.GONE);
 
@@ -224,9 +242,88 @@ public class PurchaseFormFragment extends Fragment {
             ed_shortage.setCursorVisible(false);
         }
 
+        HomeActivity.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeScreenshot();
+            }
+        });
+
         return v;
     }
 
+
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getActivity().getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            /*outputStream.flush();
+            outputStream.close();*/
+
+            Bitmap icon = bitmap;
+            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("image/*");
+            i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));
+            startActivity(Intent.createChooser(i, "Share Image"));
+
+            //openScreenshot(imageFile);
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+            Log.d("erfdfsda","error: "+e.getMessage());
+        }
+    }
+
+
+    public Uri getLocalBitmapUri(Bitmap bmp, Context context) {
+        Uri bmpUri = null;
+        try {
+            File file =  new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+            bmpUri = FileProvider.getUriForFile(context, "com.eleganzit.cgp.provider", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
+
+    }
+
+    private Bitmap getBitmapFromView(View view, int height, int width) {
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        Drawable bgDrawable = view.getBackground();
+
+        if (bgDrawable != null)
+
+            bgDrawable.draw(canvas);
+
+        else
+
+            canvas.drawColor(Color.WHITE);
+
+        view.draw(canvas);
+
+        return bitmap;
+
+    }
 
     private void updateSalebaleform() {
 

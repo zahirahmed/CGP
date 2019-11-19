@@ -4,9 +4,17 @@ package com.eleganzit.cgp.fragments;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,10 +53,15 @@ import com.eleganzit.cgp.utils.CustomAdapter;
 import com.eleganzit.cgp.utils.CustomAdapter2;
 import com.eleganzit.cgp.utils.UserLoggedInSession;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -80,6 +94,8 @@ public class SalesBalesFormFragment extends Fragment {
     String id="";
     String from="";
     LinearLayout layout1,layout2;
+    ScrollView ss;
+
 
     public SalesBalesFormFragment() {
         // Required empty public constructor
@@ -121,6 +137,7 @@ public class SalesBalesFormFragment extends Fragment {
         ed_weight=v.findViewById(R.id.ed_weight);
         layout1=v.findViewById(R.id.layout1);
         layout2=v.findViewById(R.id.layout2);
+        ss=v.findViewById(R.id.ss);
 
         spinner=v.findViewById(R.id.spinner);
         spinner2=v.findViewById(R.id.spinner2);
@@ -351,6 +368,7 @@ public class SalesBalesFormFragment extends Fragment {
         if(from.equalsIgnoreCase("view"))
         {
             HomeActivity.txt_title.setText("View Details");
+            HomeActivity.share.setVisibility(View.VISIBLE);
             getSalebale_byid();
 
                 layout1.setClickable(true);
@@ -383,9 +401,88 @@ public class SalesBalesFormFragment extends Fragment {
             ed_weight.setCursorVisible(false);
         }
 
+        HomeActivity.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeScreenshot();
+            }
+        });
+
         return v;
     }
 
+
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getActivity().getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            /*outputStream.flush();
+            outputStream.close();*/
+
+            Bitmap icon = bitmap;
+            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("image/*");
+            i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));
+            startActivity(Intent.createChooser(i, "Share Image"));
+
+            //openScreenshot(imageFile);
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+            Log.d("erfdfsda","error: "+e.getMessage());
+        }
+    }
+
+
+    public Uri getLocalBitmapUri(Bitmap bmp, Context context) {
+        Uri bmpUri = null;
+        try {
+            File file =  new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+            bmpUri = FileProvider.getUriForFile(context, "com.eleganzit.cgp.provider", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
+
+    }
+
+    private Bitmap getBitmapFromView(View view, int height, int width) {
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        Drawable bgDrawable = view.getBackground();
+
+        if (bgDrawable != null)
+
+            bgDrawable.draw(canvas);
+
+        else
+
+            canvas.drawColor(Color.WHITE);
+
+        view.draw(canvas);
+
+        return bitmap;
+
+    }
 
     private void addSellform() {
 

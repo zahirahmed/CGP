@@ -145,7 +145,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().toString().equalsIgnoreCase("1")) {
                         if (response.body().getData() != null) {
-                            String id,ginning_name,state, area = "", email,mobile;
+                            String id,ginning_name,state, area = "", email,mobile,expance,expance_unit;
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 id = String.valueOf(response.body().getData().get(i).getUserId());
                                 ginning_name = response.body().getData().get(i).getGinningName();

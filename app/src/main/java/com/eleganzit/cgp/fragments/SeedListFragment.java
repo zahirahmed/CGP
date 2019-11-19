@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +88,7 @@ public class SeedListFragment extends Fragment {
     ProgressDialog progressDialog;
     UserLoggedInSession userLoggedInSession;
     String avg_title="Season: 2019-20";
+    LinearLayout ss;
 
     public SeedListFragment() {
         // Required empty public constructor
@@ -106,6 +108,7 @@ public class SeedListFragment extends Fragment {
         rc_list=v.findViewById(R.id.rc_list);
         btn_add=v.findViewById(R.id.btn_add);
         avg_label=v.findViewById(R.id.avg_label);
+        ss=v.findViewById(R.id.ss);
 
         txt_avg_srate=v.findViewById(R.id.txt_avg_srate);
         txt_total_sweight=v.findViewById(R.id.txt_total_sweight);
@@ -273,7 +276,7 @@ public class SeedListFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                takess();
+                takeScreenshot();
 
             }
         });
@@ -352,6 +355,40 @@ public class SeedListFragment extends Fragment {
         }
     }
 
+
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getActivity().getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            /*outputStream.flush();
+            outputStream.close();*/
+
+            Bitmap icon = bitmap;
+            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("image/*");
+            i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));
+            startActivity(Intent.createChooser(i, "Share Image"));
+
+            //openScreenshot(imageFile);
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+            Log.d("erfdfsda","error: "+e.getMessage());
+        }
+    }
 
     private Bitmap getBitmapFromView(View view, int height, int width) {
 

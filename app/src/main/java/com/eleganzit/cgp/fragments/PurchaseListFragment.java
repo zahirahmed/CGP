@@ -87,6 +87,7 @@ public class PurchaseListFragment extends Fragment {
     LinearLayout cardviewdashboard;
     UserLoggedInSession userLoggedInSession;
     NestedScrollView scrollview;
+    LinearLayout ss;
     //SwipeRefreshLayout swipe_refresh;
 
     public PurchaseListFragment() {
@@ -112,6 +113,7 @@ public class PurchaseListFragment extends Fragment {
 
         rc_list=v.findViewById(R.id.rc_list);
         btn_add=v.findViewById(R.id.btn_add);
+        ss=v.findViewById(R.id.ss);
 
         //swipe_refresh=v.findViewById(R.id.swipe_refresh);
         cardviewdashboard=v.findViewById(R.id.cardviewdashboard);
@@ -278,7 +280,8 @@ public class PurchaseListFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                takess();
+                //takess();
+                takeScreenshot();
 
             }
         });
@@ -371,6 +374,39 @@ public class PurchaseListFragment extends Fragment {
         }
     }
 
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getActivity().getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            /*outputStream.flush();
+            outputStream.close();*/
+
+            Bitmap icon = bitmap;
+            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("image/*");
+            i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));
+            startActivity(Intent.createChooser(i, "Share Image"));
+
+            //openScreenshot(imageFile);
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+            Log.d("erfdfsda","error: "+e.getMessage());
+        }
+    }
 
     private Bitmap getBitmapFromView(View view, int height, int width) {
 

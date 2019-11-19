@@ -34,6 +34,7 @@ import com.eleganzit.cgp.utils.UserLoggedInSession;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import androidx.core.content.FileProvider;
@@ -51,6 +52,7 @@ public class StockFragment extends Fragment {
     ProgressDialog progressDialog;
     UserLoggedInSession userLoggedInSession;
     TextView txt_frst,txt_scnd,txt_thrd,txt_frth;
+    TextView txt_gn_name,txt_date;
     ScrollView scrollview;
 
     public StockFragment() {
@@ -79,6 +81,16 @@ public class StockFragment extends Fragment {
         txt_scnd=v.findViewById(R.id.txt_scnd);
         txt_thrd=v.findViewById(R.id.txt_thrd);
         txt_frth=v.findViewById(R.id.txt_frth);
+        txt_gn_name=v.findViewById(R.id.txt_gn_name);
+        txt_date=v.findViewById(R.id.txt_date);
+
+        long date = System.currentTimeMillis();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String dateString = sdf.format(date);
+
+        txt_gn_name.setText(userLoggedInSession.getUserDetails().get(UserLoggedInSession.GINNING_NAME)+"");
+        txt_date.setText(dateString+"");
 
         stockValues();
 

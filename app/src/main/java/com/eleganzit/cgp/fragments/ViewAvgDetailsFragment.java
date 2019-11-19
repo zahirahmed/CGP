@@ -1,19 +1,34 @@
 package com.eleganzit.cgp.fragments;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eleganzit.cgp.HomeActivity;
 import com.eleganzit.cgp.R;
 import com.eleganzit.cgp.models.AvgPurchaseData;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Date;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -24,6 +39,7 @@ public class ViewAvgDetailsFragment extends Fragment {
     TextView txt_date,txt_avg_krate,avg_srate,txt_avg_per_cott,txt_avg_per_seed,txt_pur_krate,txt_seed_weight,txt_shortage,txt_approx_brate,txt_approx_bales,avg_label;
     String avg_title;
     AvgPurchaseData avgPurchaseData;
+    LinearLayout ss;
 
     public ViewAvgDetailsFragment() {
         // Required empty public constructor
@@ -37,7 +53,7 @@ public class ViewAvgDetailsFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_view_avg_details, container, false);
 
         HomeActivity.txt_title.setText("View Details");
-        HomeActivity.share.setVisibility(View.GONE);
+        HomeActivity.share.setVisibility(View.VISIBLE);
         HomeActivity.filter.setVisibility(View.GONE);
 
         avg_label=v.findViewById(R.id.avg_label);
@@ -51,6 +67,7 @@ public class ViewAvgDetailsFragment extends Fragment {
         txt_shortage=v.findViewById(R.id.txt_shortage);
         txt_approx_brate=v.findViewById(R.id.txt_approx_brate);
         txt_approx_bales=v.findViewById(R.id.txt_approx_bales);
+        ss=v.findViewById(R.id.ss);
 
         if(getArguments()!=null){
             avgPurchaseData=(AvgPurchaseData)getArguments().getSerializable("avgPurchaseData");
@@ -80,7 +97,88 @@ public class ViewAvgDetailsFragment extends Fragment {
 
         }
 
+        HomeActivity.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeScreenshot();
+            }
+        });
+
         return v;
     }
+
+
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpg";
+
+            // create bitmap screen capture
+            View v1 = getActivity().getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            /*outputStream.flush();
+            outputStream.close();*/
+
+            Bitmap icon = bitmap;
+            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("image/*");
+            i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));
+            startActivity(Intent.createChooser(i, "Share Image"));
+
+            //openScreenshot(imageFile);
+        } catch (Throwable e) {
+            // Several error may come out with file handling or DOM
+            e.printStackTrace();
+            Log.d("erfdfsda","error: "+e.getMessage());
+        }
+    }
+
+
+    public Uri getLocalBitmapUri(Bitmap bmp, Context context) {
+        Uri bmpUri = null;
+        try {
+            File file =  new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+            bmpUri = FileProvider.getUriForFile(context, "com.eleganzit.cgp.provider", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
+
+    }
+
+    private Bitmap getBitmapFromView(View view, int height, int width) {
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        Drawable bgDrawable = view.getBackground();
+
+        if (bgDrawable != null)
+
+            bgDrawable.draw(canvas);
+
+        else
+
+            canvas.drawColor(Color.WHITE);
+
+        view.draw(canvas);
+
+        return bitmap;
+
+    }
+
 
 }
