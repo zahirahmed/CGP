@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eleganzit.cgp.utils.UserLoggedInSession;
 
@@ -52,6 +54,12 @@ public class SplashActivity extends AppCompatActivity {
         logo.startAnimation(expandIn);
 
         Animation aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         forceUpdate();
 
@@ -93,9 +101,35 @@ public class SplashActivity extends AppCompatActivity {
                         .first()
                         .ownText();
 
+                Log.d("tysfdds","doInBackground");
 
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("tysfdds",""+e.getMessage());
+
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        if (userLoggedInSession.isLoggedIn())
+                        {
+                            startActivity(new Intent(SplashActivity.this,HomeActivity.class)
+                                    .putExtra("from","splash")
+                            );
+                            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                            finish();
+                        }
+                        else {
+                            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+                            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                            finish();
+
+                        }
+
+                    }
+                },2500);
+
             }
             return new JSONObject();
         }
@@ -134,7 +168,7 @@ public class SplashActivity extends AppCompatActivity {
                                     }
 
                                 }
-                            },3000);
+                            },2500);
 
                         }
 
@@ -163,7 +197,7 @@ public class SplashActivity extends AppCompatActivity {
                             }
 
                         }
-                    },3000);
+                    },2500);
 
                 }
             }
@@ -180,6 +214,12 @@ public class SplashActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int id) {
                     context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getPackageName())));
                     dialog.cancel();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
                 }
             });
             alertDialogBuilder.show();

@@ -586,7 +586,7 @@ public class BalesListFragment extends Fragment {
             outputStream.close();*/
 
             Bitmap icon = bitmap;
-            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            //icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("image/*");
             i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));

@@ -38,6 +38,7 @@ import com.eleganzit.cgp.fragments.SalesBalesFormFragment;
 import com.eleganzit.cgp.fragments.SeedListFragment;
 import com.eleganzit.cgp.fragments.StockFragment;
 import com.eleganzit.cgp.models.LoginResponse;
+import com.eleganzit.cgp.models.SaleBaleFormData;
 import com.eleganzit.cgp.models.SlideMenuItem;
 import com.eleganzit.cgp.utils.UserLoggedInSession;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -128,7 +129,7 @@ public class HomeActivity extends AppCompatActivity
 
                 if (getIntent() != null) {
 
-
+                    if (getIntent().getStringExtra("from")!=null)
                     if (getIntent().getStringExtra("from").equalsIgnoreCase("login")) {
 
 
@@ -186,6 +187,28 @@ public class HomeActivity extends AppCompatActivity
 
             }
         }
+
+
+        if (getIntent() != null) {
+
+            if (getIntent().getStringExtra("from")!=null)
+
+            if (getIntent().getStringExtra("from").equalsIgnoreCase("notification")) {
+
+                if(getIntent().getStringExtra("to").equalsIgnoreCase("purchase")){
+                    PurchaseFormFragment purchaseFormFragment = new PurchaseFormFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, purchaseFormFragment).commit();
+                }
+                else if(getIntent().getStringExtra("to").equalsIgnoreCase("sale")){
+                    SalesBalesFormFragment salesBalesFormFragment= new SalesBalesFormFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, salesBalesFormFragment).commit();
+
+                }
+
+            }
+
+        }
+
 
         final String[] mMenuTitles = {"Purchase", "Sale Bales", "Sale Seed", "Stock", "Settings", "Check Kapas Rate", "About Us"};
 

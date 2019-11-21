@@ -165,7 +165,7 @@
                                     android:background="#fff"
                                     android:textSize="12sp"
                                     android:fontFamily="@font/poppins_regular"
-                                    android:text="Avg Seed Rate"
+                                    android:text="Approx Seed Rate"
                                     android:textColor="@color/colorGray"
                                     android:layout_height="wrap_content" />
 

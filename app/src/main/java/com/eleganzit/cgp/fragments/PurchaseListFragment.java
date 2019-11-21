@@ -82,6 +82,7 @@ public class PurchaseListFragment extends Fragment {
     int list_size=0;
     boolean end=false;
     String avg_title="Season: 2019-20";
+    String avg_title2="Season: 2019-20";
 
     ProgressDialog progressDialog;
     LinearLayout cardviewdashboard;
@@ -229,6 +230,23 @@ public class PurchaseListFragment extends Fragment {
                                 avgFkapasrate(from,to);
                                 getFPurchaseform(from,to);
 
+                                String fromString = from;
+                                String toString = to;
+                                String[] separatedfrom = fromString.split("-");
+                                String[] separatedto = toString.split("-");
+
+                                from=separatedfrom[2]+"-"+separatedfrom[1]+"-"+separatedfrom[0];
+                                to=separatedto[2]+"-"+separatedto[1]+"-"+separatedto[0];
+
+
+                                if(from.equalsIgnoreCase(to)){
+                                    avg_title2="Date - "+from;
+                                }
+                                else
+                                {
+                                    avg_title2="Date - "+from+" to "+to;
+                                }
+
                                 dialog1.dismiss();
                             }
                         });
@@ -243,6 +261,7 @@ public class PurchaseListFragment extends Fragment {
                         dialog.dismiss();
                         final Dialog dialog1=new Dialog(getActivity());
                         avg_title="Season: 2019-20";
+                        avg_title2="Season: 2019-20";
 
                         dialog1.setContentView(R.layout.season_dialog);
 
@@ -394,7 +413,7 @@ public class PurchaseListFragment extends Fragment {
             outputStream.close();*/
 
             Bitmap icon = bitmap;
-            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            //icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("image/*");
             i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));
@@ -746,7 +765,7 @@ public class PurchaseListFragment extends Fragment {
                                         Bundle bundle=new Bundle();
                                         //String personJsonString = Utils.getGsonParser().toJson(avgPurchaseData);
                                         bundle.putSerializable("avgPurchaseData",avgPurchaseData);
-                                        bundle.putString("avg_title",avg_title);
+                                        bundle.putString("avg_title",avg_title2);
 
                                         viewAvgDetailsFragment.setArguments(bundle);
 
@@ -832,7 +851,7 @@ public class PurchaseListFragment extends Fragment {
                                         Bundle bundle=new Bundle();
                                         //String personJsonString = Utils.getGsonParser().toJson(avgPurchaseData);
                                         bundle.putSerializable("avgPurchaseData",avgPurchaseData);
-                                        bundle.putString("avg_title",avg_title);
+                                        bundle.putString("avg_title",avg_title2);
 
                                         viewAvgDetailsFragment.setArguments(bundle);
 

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.eleganzit.cgp.HomeActivity;
 import com.eleganzit.cgp.R;
 import com.eleganzit.cgp.models.AvgPurchaseData;
+import com.eleganzit.cgp.utils.UserLoggedInSession;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,10 +37,11 @@ import androidx.fragment.app.Fragment;
  */
 public class ViewAvgDetailsFragment extends Fragment {
 
-    TextView txt_date,txt_avg_krate,avg_srate,txt_avg_per_cott,txt_avg_per_seed,txt_pur_krate,txt_seed_weight,txt_shortage,txt_approx_brate,txt_approx_bales,avg_label;
+    TextView txt_ginning_name,txt_date,txt_avg_krate,avg_srate,txt_avg_per_cott,txt_avg_per_seed,txt_pur_krate,txt_seed_weight,txt_shortage,txt_approx_brate,txt_approx_bales,txt_k_weight,avg_label;
     String avg_title;
     AvgPurchaseData avgPurchaseData;
     LinearLayout ss;
+    UserLoggedInSession userLoggedInSession;
 
     public ViewAvgDetailsFragment() {
         // Required empty public constructor
@@ -56,7 +58,10 @@ public class ViewAvgDetailsFragment extends Fragment {
         HomeActivity.share.setVisibility(View.VISIBLE);
         HomeActivity.filter.setVisibility(View.GONE);
 
+        userLoggedInSession=new UserLoggedInSession(getActivity());
+
         avg_label=v.findViewById(R.id.avg_label);
+        txt_ginning_name=v.findViewById(R.id.txt_ginning_name);
         txt_date=v.findViewById(R.id.txt_date);
         txt_avg_krate=v.findViewById(R.id.txt_avg_krate);
         avg_srate=v.findViewById(R.id.avg_srate);
@@ -67,20 +72,24 @@ public class ViewAvgDetailsFragment extends Fragment {
         txt_shortage=v.findViewById(R.id.txt_shortage);
         txt_approx_brate=v.findViewById(R.id.txt_approx_brate);
         txt_approx_bales=v.findViewById(R.id.txt_approx_bales);
+        txt_k_weight=v.findViewById(R.id.txt_k_weight);
         ss=v.findViewById(R.id.ss);
+
+        txt_ginning_name.setText("Ginning Name : "+userLoggedInSession.getUserDetails().get(UserLoggedInSession.GINNING_NAME)+"");
 
         if(getArguments()!=null){
             avgPurchaseData=(AvgPurchaseData)getArguments().getSerializable("avgPurchaseData");
             avg_title=getArguments().getString("avg_title");
 
 
-            String yourFormattedString1,yourFormattedString2,yourFormattedString3,yourFormattedString4;
+            String yourFormattedString1,yourFormattedString2,yourFormattedString3,yourFormattedString4,yourFormattedString5;
 
             DecimalFormat formatter = new DecimalFormat("##,##,##,###");
             yourFormattedString1 = formatter.format(Double.valueOf(avgPurchaseData.getPurchaseCotton()));
             yourFormattedString2 = formatter.format(Double.valueOf(avgPurchaseData.getTotalSeedWeight()));
             yourFormattedString3 = formatter.format(Double.valueOf(avgPurchaseData.getApproxBaleRate()));
             yourFormattedString4 = formatter.format(Double.valueOf(avgPurchaseData.getBales()));
+            yourFormattedString5 = formatter.format(Double.valueOf(avgPurchaseData.getAvgPureCottonWeight()));
 
 
             txt_avg_krate.setText((Html.fromHtml("<b>" + avgPurchaseData.getAvgKapasRate() + "</b>"+"<font color='#707070'>"+" "+"Rs/"+avgPurchaseData.getGetcotton_rate()+"kg"+"</font>")));//+" Rs/"+avgPurchaseData.getGetcotton_rate()+"kg"
@@ -92,6 +101,7 @@ public class ViewAvgDetailsFragment extends Fragment {
             txt_shortage.setText((Html.fromHtml("<b>" +avgPurchaseData.getAvgShortage()+"</b>"+"<font color='#707070'>"+" "+" %"+"</font>")));
             txt_approx_brate.setText((Html.fromHtml("<b>" +yourFormattedString3+"</b>"+"<font color='#707070'>"+" "+" Rs/"+avgPurchaseData.getGetbales_weight()+"kg"+"</font>")));
             txt_approx_bales.setText((Html.fromHtml("<b>" +yourFormattedString4+"</b>"+"<font color='#707070'>"+" "+" Bales"+"</font>")));
+            txt_k_weight.setText((Html.fromHtml("<b>" +yourFormattedString5+"</b>"+"<font color='#707070'>"+" "+" kg"+"</font>")));
             avg_label.setText(""+avg_title);
 
 
@@ -128,7 +138,7 @@ public class ViewAvgDetailsFragment extends Fragment {
             outputStream.close();*/
 
             Bitmap icon = bitmap;
-            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            //icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("image/*");
             i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));

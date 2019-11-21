@@ -213,7 +213,7 @@ public class PurchaseFormFragment extends Fragment {
 
         if(from.equalsIgnoreCase("view"))
         {
-            HomeActivity.txt_title.setText("View Details");
+            //HomeActivity.txt_title.setText("View Details");
             HomeActivity.share.setVisibility(View.VISIBLE);
             getSalebale_byid();
             btn_submit.setVisibility(View.GONE);
@@ -273,7 +273,7 @@ public class PurchaseFormFragment extends Fragment {
             outputStream.close();*/
 
             Bitmap icon = bitmap;
-            icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
+            //icon = getBitmapFromView(ss, ss.getChildAt(0).getHeight(), ss.getChildAt(0).getWidth());
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("image/*");
             i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(icon, getActivity()));

@@ -125,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:hint="Seed Rate (Rs)"
+            android:hint="Approx Seed Rate (Rs)"
             android:inputType="number"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="#000000" />
